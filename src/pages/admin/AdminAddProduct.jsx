@@ -175,14 +175,14 @@ export default function AdminAddProduct() {
 
             {/* Groupe */}
             <div className="space-y-2">
-              <label className="text-xs font-black uppercase text-secondary tracking-widest px-1">Catégorie</label>
+              <label className="text-xs font-black uppercase text-secondary tracking-widest px-1">Groupe</label>
               <select 
                 required
                 value={formData.IdGroupe} 
                 className="w-full bg-slate-50 border-none rounded-2xl p-4 focus:ring-2 focus:ring-primary font-medium"
                 onChange={(e) => setFormData({...formData, IdGroupe: e.target.value})}
               >
-                <option value="">Choisir une marque</option>
+                <option value="">Choisir un groupe</option>
                 {groups.map(g => <option key={g.id} value={g.id}>{g.Nom}</option>)}
               </select>
             </div>

@@ -44,7 +44,6 @@ export default function AdminGroups() {
     }
     if (window.confirm("Supprimer cette Groupe ?")) {
       await deleteDoc(doc(db, "Groupes", id));
-      fetchGroups();
     }
   };
 

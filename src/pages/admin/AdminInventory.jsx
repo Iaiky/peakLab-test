@@ -80,6 +80,15 @@ export default function AdminInventory() {
     const moveQty = Number(quantity);
     const pPrice = Number(unitPrice);
     let updatedStockValue;
+    const reference =
+      selectedProduct.id +
+      "_" +
+      moveQty +
+      new Date()
+        .toISOString()
+        .slice(0, 16)
+        .replace("T", "-")
+        .replace(":", "-");// ID unique pour éviter les doublons
 
     try {
       const productRef = doc(db, "produits", selectedProduct.id);
@@ -101,17 +110,18 @@ export default function AdminInventory() {
         // 3. Vérification de sécurité pour les sorties
         if (movementType === 'OUT' && currentStock < moveQty) {
           throw `Stock insuffisant ! (Disponible: ${currentStock}, Demandé: ${moveQty})`;
-        }
-
-        // 4. MISE À JOUR DU PRODUIT
-        transaction.update(productRef, { 
-          Stock: updatedStockValue,
-          DerniereMiseAJour: serverTimestamp() 
-        });
+        }  
 
         // 5. CRÉATION DU MOUVEMENT D'HISTORIQUE
-        const movementRef = doc(collection(db, "MouvementsStock"));
+        const movementRef = doc(db, "MouvementsStock", reference);
+
+        const existingMovement = await transaction.get(movementRef);
+        if (existingMovement.exists()) {
+          throw "Ce mouvement existe déjà.";
+        }
+        
         transaction.set(movementRef, {
+          reference: reference, 
           Produit: selectedProduct.Nom || "Produit sans nom",
           ProductId: selectedProduct.id,
           ProduitPoids: selectedProduct.Poids,
@@ -125,6 +135,12 @@ export default function AdminInventory() {
           DateAjout: serverTimestamp(),
           StockAvant: currentStock,
           StockApres: updatedStockValue
+        });
+
+        // 5. MISE À JOUR DU PRODUIT
+        transaction.update(productRef, { 
+          Stock: updatedStockValue,
+          DerniereMiseAJour: serverTimestamp() 
         });
       });
 
