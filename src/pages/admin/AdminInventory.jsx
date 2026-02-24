@@ -112,8 +112,9 @@ export default function AdminInventory() {
         // 5. CRÉATION DU MOUVEMENT D'HISTORIQUE
         const movementRef = doc(collection(db, "MouvementsStock"));
         transaction.set(movementRef, {
-          Produit: selectedProduct.Nom || selectedProduct.name || "Produit sans nom",
+          Produit: selectedProduct.Nom || "Produit sans nom",
           ProductId: selectedProduct.id,
+          ProduitPoids: selectedProduct.Poids,
           IdGroupe: productData.IdGroupe || "N/A",
           IdCategorie: productData.IdCategorie || "N/A",
           Quantite: moveQty,
@@ -257,7 +258,7 @@ export default function AdminInventory() {
                   <p className="text-[10px] text-secondary font-black uppercase tracking-widest mb-1">Référence</p>
                   
                   {/* Nom du produit : Autorise 2 lignes avant les "..." */}
-                  <p className="font-black text-slate-900 text-base leading-tight line-clamp-2 mb-2">
+                  <p className="font-black text-slate-900 text-base leading-tight line-clamp-3 mb-2">
                     {product.Nom}
                   </p>
                   

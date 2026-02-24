@@ -170,7 +170,12 @@ export default function AdminInventoryHistory() {
                 <div className="flex justify-between items-end bg-slate-50/50 p-3 rounded-t-2xl border-b border-white">
                   <div className="min-w-0">
                     <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Produit</p>
-                    <p className="font-black text-slate-900 text-sm truncate">{mov.Produit}</p>
+                    <p className="font-black text-slate-900 text-base leading-tight line-clamp-3 mb-0.5">{mov.Produit}</p>
+                    {Number(mov.ProduitPoids) > 0 && (
+                      <p className="text-[10px] text-slate-400 font-bold italic">
+                        {mov.ProduitPoids}g
+                      </p>
+                    )}
                   </div>
                   <div className="text-right">
                     <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Quantité</p>
@@ -228,7 +233,14 @@ export default function AdminInventoryHistory() {
                       <p className="text-[9px] text-slate-400 font-mono tracking-tighter">{mov.id}</p>
                     </td>
                     <td className="p-6">
-                      <p className="font-bold text-slate-900">{mov.Produit}</p>
+                      <p className="font-bold text-slate-900">
+                        {mov.Produit}
+                        {Number(mov.ProduitPoids) > 0 && (
+                          <span className="ml-1 text-[10px] text-slate-400 font-bold italic">
+                            ({mov.ProduitPoids}g)
+                          </span>
+                        )}
+                      </p>
                     </td>
                     <td className="p-6 text-center">
                       <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest whitespace-nowrap ${
