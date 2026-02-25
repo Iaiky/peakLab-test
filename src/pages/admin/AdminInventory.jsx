@@ -124,6 +124,7 @@ export default function AdminInventory() {
           reference: reference, 
           Produit: selectedProduct.Nom || selectedProduct.name || "Produit sans nom",
           ProductId: selectedProduct.id,
+          ProduitPoids: selectedProduct.Poids,
           IdGroupe: productData.IdGroupe || "N/A",
           IdCategorie: productData.IdCategorie || "N/A",
           Quantite: moveQty,
@@ -273,7 +274,7 @@ export default function AdminInventory() {
                   <p className="text-[10px] text-secondary font-black uppercase tracking-widest mb-1">Référence</p>
                   
                   {/* Nom du produit : Autorise 2 lignes avant les "..." */}
-                  <p className="font-black text-slate-900 text-base leading-tight line-clamp-2 mb-2">
+                  <p className="font-black text-slate-900 text-base leading-tight line-clamp-4 mb-2">
                     {product.Nom}
                   </p>
                   
@@ -296,7 +297,11 @@ export default function AdminInventory() {
                     Stock
                   </p>
                   <span className={`inline-block px-3 py-1 rounded-lg text-[11px] font-black ${
-                    Number(product.Stock) < 10 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
+                    Number(product.Stock) > 5 
+                      ? 'bg-green-100 text-green-600' 
+                      : Number(product.Stock) === 0 
+                        ? 'bg-red-100 text-red-600' 
+                        : 'bg-orange-100 text-orange-600'
                   }`}>
                     {product.Stock || 0} pcs
                   </span>
@@ -350,10 +355,14 @@ export default function AdminInventory() {
                     )}
                   </td>
                   <td className="px-6 py-5">
-                    <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black ${
-                      Number(product.Stock) < 10 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
+                    <span className={`inline-block px-3 py-1 rounded-lg text-[11px] font-black ${
+                      Number(product.Stock) > 5 
+                        ? 'bg-green-100 text-green-600' 
+                        : Number(product.Stock) === 0 
+                          ? 'bg-red-100 text-red-600' 
+                          : 'bg-orange-100 text-orange-600'
                     }`}>
-                      {product.Stock || 0} en stock
+                      {product.Stock || 0} pcs
                     </span>
                   </td>
                   <td className="px-8 py-5 text-right">

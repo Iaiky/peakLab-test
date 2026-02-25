@@ -197,7 +197,7 @@ export default function AdminAddProduct() {
                 className="w-full bg-slate-50 border-none rounded-2xl p-4 focus:ring-2 focus:ring-primary font-medium"
                 onChange={(e) => setFormData({...formData, IdCategorie: e.target.value})}
               >
-                <option value="">{formData.IdGroupe ? "Choisir catégorie" : "Sélectionnez d'abord une marque"}</option>
+                <option value="">{formData.IdGroupe ? "Choisir catégorie" : "Sélectionnez d'abord un groupe"}</option>
                 {filteredCategories.map(c => <option key={c.id} value={c.id}>{c.Nom}</option>)}
               </select>
             </div>
